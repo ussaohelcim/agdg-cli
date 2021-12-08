@@ -13,3 +13,7 @@ Você pode usar sem precisar baixar, basta chamar o script pela internet.
 ```powershell
 Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/ussaohelcim/agdg-cli/main/agdg.ps1'))
 ```
+
+# Screenshot
+
+![](https://media.discordapp.net/attachments/633395912143667202/918194916570566706/unknown.png)
