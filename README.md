@@ -8,3 +8,8 @@ Programinha simples para ler os fios do /agdg/ direto no terminal.
 - [X] Ler fios
 - [X] Link de arquivos
 - [X] Baixar todos os arquivos
+
+Você pode usar sem precisar baixar, basta chamar o script pela internet.
+```powershell
+Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/ussaohelcim/agdg-cli/main/agdg.ps1'))
+```
