@@ -4,12 +4,13 @@ function PuxarJsonELimpar { param ($urljson)
 	return $limpo
 }
 function GetNome { 	param ( $reply )
-	return $reply.name
+	$_name = if($reply.trip) {$reply.name +""+ $reply.trip } else {$reply.name}
+	return $_name
 }
 function GetFile { 	param ( $reply )
 	try {
 		$linkFile = "https://i.4cdn.org/vg/" + $reply.tim + $reply.ext
-		$filename = if($null -eq $reply.ext) {'-'} else {$reply.filename + $reply.ext +" > "+ $linkFile} 
+		$filename = if($null -eq $reply.ext) { $null } else {$reply.filename + $reply.ext +" > "+ $linkFile} 
 
 		return $filename
 	}
@@ -65,9 +66,30 @@ function PrintarFio { param ( $numFio )
 		$num = GetNumeroResposta -reply $resposta
 		Write-Host $name -ForegroundColor Green -NoNewline
 		Write-Host "" $data "no.$num"
-		Write-Host $file -ForegroundColor Blue
-		Write-Host $textoPuro
+		if($file) {Write-Host $file -ForegroundColor Blue}
+		#Write-Host $textoPuro
 
+		$linhas = $textoPuro.Split([Environment]::NewLine)
+
+		foreach($linha in $linhas)
+		{
+			[string]$txt = $linha
+
+			if($txt.StartsWith('>>'))
+			{
+				Write-Host $txt -ForegroundColor DarkRed
+			}
+			elseif ($txt.StartsWith('>')) {
+				
+				Write-Host $txt -ForegroundColor DarkGreen
+				
+			}
+			else {
+				Write-Host $txt
+			}
+			
+		}
+		
 		EscreverNoTamanhoDaTela -letra "-" -cor Red
 	}
 	return $fioJson
