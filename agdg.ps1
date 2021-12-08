@@ -203,19 +203,26 @@ function Main {
 	$catalogo = PuxarJsonELimpar -urljson "https://boards.4channel.org/vg/catalog.json"
 
 	$agdg = 0
-
+	$achou = $false
 	foreach ($page in $catalogo) {
+		#Write-Host $page.page $achou
+		$fios = $page.threads
+
+		if($achou) {break}
+		
 		$fios = $page.threads
 		foreach ($fio in $fios) {
 			[string]$general = $fio.sub
 			if($general.Contains("/agdg/"))
 			{
 				$agdg = $fio.no
+				$achou = $true
 				break #
 			}
 		}
 	}
 	$script:fioAGDG = PrintarFio -numFio $agdg
+	
 	Perguntar
 }
 
