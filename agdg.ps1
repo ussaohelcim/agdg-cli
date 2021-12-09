@@ -1,4 +1,5 @@
 function PuxarJsonELimpar { param ($urljson)
+	$ProgressPreference = 'SilentlyContinue'
 	$sujo = Invoke-WebRequest -Uri $urljson 
 	$limpo = $sujo.Content | ConvertFrom-Json
 	return $limpo
@@ -27,6 +28,92 @@ function GetUnixTime { 	param ( $reply )
 }
 function Get-WindowSize {
 	return (Get-Host).UI.RawUI.WindowSize.Width
+}
+function LogoAGDG{
+	[string]$corp ="agdg-cli, made with fear by ussaohelcim" 
+	$_tamjanela = Get-WindowSize
+	Write-Host $corp -ForegroundColor DarkRed
+	$t = @"
+
+
+		    /#####|      /#####|  |###\          /#####|
+		   /######|     /######|  |####\        /######|
+		  /##   ##|    /##/  |#|  |## ##\      /##/  |#|
+		 /##    ##|   /##/        |##  ##\    /##/      
+		|#########|  |##|  |###|  |##   ##|  |##|  |###|
+		|##|   |##|  |##|    |#|  |##  ###/  |##|    |#|
+		|##|   |##|  |#########|  |######/   |#########|
+
+
+"@,@"
+
+		          _____ _____   _____ 
+		    /\   / ____|  __ \ / ____|
+		   /  \ | |  __| |  | | |  __ 
+		  / /\ \| | |_ | |  | | | |_ |
+		 / ____ \ |__| | |__| | |__| |
+		/_/    \_\_____|_____/ \_____|
+
+
+"@,@"
+
+
+		▄▄▄        ▄████ ▓█████▄   ▄████ 
+		▒████▄     ██▒ ▀█▒▒██▀ ██▌ ██▒ ▀█▒
+		▒██  ▀█▄  ▒██░▄▄▄░░██   █▌▒██░▄▄▄░
+		░██▄▄▄▄██ ░▓█  ██▓░▓█▄   ▌░▓█  ██▓
+		 ▓█   ▓██▒░▒▓███▀▒░▒████▓ ░▒▓███▀▒
+		 ▒▒   ▓▒█░ ░▒   ▒  ▒▒▓  ▒  ░▒   ▒ 
+		  ▒   ▒▒ ░  ░   ░  ░ ▒  ▒   ░   ░ 
+		  ░   ▒   ░ ░   ░  ░ ░  ░ ░ ░   ░ 
+		      ░  ░      ░    ░          ░ 
+		                   ░       
+
+
+"@,@"
+
+
+		_______  _______  ______   _______ 
+		(  ___  )(  ____ \(  __  \ (  ____ \
+		| (   ) || (    \/| (  \  )| (    \/
+		| (___) || |      | |   ) || |      
+		|  ___  || | ____ | |   | || | ____ 
+		| (   ) || | \_  )| |   ) || | \_  )
+		| )   ( || (___) || (__/  )| (___) |
+		|/     \|(_______)(______/ (_______)
+
+
+"@,@"
+     
+          
+                      ___ 
+                     /\__\   
+                    /:/ _/_   
+                   /:/ /\  \
+                  /:/ /::\  \
+             ___ /:/  \/\:\  \ ___ 
+            /\  \\:\  \ /:/  //\__\   
+           /::\  \\:\  /:/  //:/ _/_   
+          /:/\:\  \\:\/:/  //:/ /\  \  
+         /:/ /::\  \\::/  //:/ /::\  \ 
+        /:/_/:/\:\__\\/__//:/__\/\:\__\
+        \:\/:/  \/__/     \:\  \ /:/  /
+         \::/__/    _____  \:\  /:/  / 
+          \:\  \   /::\  \  \:\/:/  /  
+           \:\__\ /:/\:\  \  \::/  /    
+            \/__//:/  \:\__\  \/__/       
+                /:/__/ \:|__|     
+                \:\  \ /:/  /
+                 \:\  /:/  / 
+                  \:\/:/  /  
+                   \::/  /   
+                    \/__/      
+	        
+
+"@
+
+	Write-Host ($t | Get-Random ) -ForegroundColor Yellow
+	
 }
 function RetornaComWrap { param ([string]$textoOriginal)
 	[string]$novoTexto = ""
@@ -78,10 +165,19 @@ function EscreverNoTamanhoDaTela {	param (	$letra, $cor)
 }
 function PrintarFio { param ( $numFio )
 	$script:breadLink = "https://boards.4channel.org/vg/thread/$numFio"
+
+	$_acoesEngracadao = ("removing posts from Cris...", "simping Tomodev...", "quoting Pomao fan art...")
+	Write-Host ($_acoesEngracadao | Get-Random)
+
 	$fioJson = PuxarJsonELimpar -urljson "https://boards.4channel.org/vg/thread/$numFio.json"
 
+	Start-Sleep -Seconds 2
+
+	Clear-Host
+	
+
 	foreach($resposta in $fioJson.posts)
-	{
+	{	
 		$nl = [System.Environment]::NewLine
         [string]$textoPuro = $resposta.com -replace '<br>',$nl
         $textoPuro = $textoPuro -replace '<br/>',$nl
@@ -122,14 +218,11 @@ function PrintarFio { param ( $numFio )
 				$quemQuotou += " >>$_num"
 			}
 		}
+		
 		Write-Host $quemQuotou -ForegroundColor DarkGray 
 
 		if($file) {Write-Host $file -ForegroundColor DarkYellow}
-		#Write-Host $textoPuro
 
-		#$_teste = RetornaComWrap -textoOriginal $textoPuro
-
-		#$linhas = $_teste.Split([Environment]::NewLine)
 		$linhas = $textoPuro.Split([Environment]::NewLine)
 
 		foreach($linha in $linhas)
@@ -158,6 +251,7 @@ function PrintarFio { param ( $numFio )
 }
 
 function BaixarTudo { param ($fio )
+	[array]$links = @()
 	foreach($r in $fio.posts)
 	{
 		try {
@@ -168,12 +262,22 @@ function BaixarTudo { param ($fio )
 			
 			if($nomeArquivo -ne "")
 			{
-				Write-Host "baixando $nomeArquivo"
-				Invoke-WebRequest -Uri $linkFile -OutFile $nomeArquivo 
+				$links += $linkFile
 			}
 		}
 		catch {	"error?" }
 		 
+	}
+	for ($i = 0; $i -lt $links.Count; $i++) {
+		
+		$filename = $links[$i] -replace "https://i.4cdn.org/vg/",""
+		$raw = "https://i.4cdn.org/vg/$filename"
+		$ProgressPreference = 'SilentlyContinue'
+		Invoke-WebRequest -Uri $raw -OutFile $filename #-Verbose #-Debug
+		$ProgressPreference = 'Continue' 
+		$_textt = ($i *100 /$links.Count)
+		
+		Write-Progress -CurrentOperation "downloading $filename from $raw" -Status "$_textt% complete"  -Activity "Downloading files from bread..."  -PercentComplete ($i *100 /$links.Count)		
 	}
 	
 }
@@ -189,9 +293,10 @@ function Perguntar {
 	} elseif ($opcao -eq 'l') {
 		Set-Clipboard $breadLink
 		Write-Host "LINK IS NOW IN YOUR CLIPBOARD" -ForegroundColor Blue
-		Write-Host "openning msedge inprivate mode..." 
+		Write-Host "Refreshing in 2..." 
 		Start-Sleep -Seconds 2
-		Start-Process msedge --inprivate 
+		
+		Main
 	}
 	else {
 		Write-Host "closing..."
@@ -213,14 +318,18 @@ function Main {
 		$fios = $page.threads
 		foreach ($fio in $fios) {
 			[string]$general = $fio.sub
-			if($general.Contains("/agdg/"))
+			if($general.Contains("/agdg/") -or $general.Contains("/AGDG/"))
 			{
 				$agdg = $fio.no
 				$achou = $true
+				#Write-Host "achou em" $page.page
 				break #
 			}
 		}
 	}
+
+	LogoAGDG
+	
 	$script:fioAGDG = PrintarFio -numFio $agdg
 	
 	Perguntar
